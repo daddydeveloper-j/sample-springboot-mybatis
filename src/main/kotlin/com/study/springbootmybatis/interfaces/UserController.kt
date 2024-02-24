@@ -2,10 +2,7 @@ package com.study.springbootmybatis.interfaces
 
 import com.study.springbootmybatis.application.dto.RegisterUserRequest
 import com.study.springbootmybatis.domain.User
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class UserController {
@@ -15,6 +12,11 @@ class UserController {
     @GetMapping("/users")
     fun getUsers(): List<User> {
         return users.map { it.value }
+    }
+
+    @GetMapping("/users/{seq}")
+    fun getUser(@PathVariable seq: Long): User {
+        return users[seq] ?: throw RuntimeException("등록된 유저가 없습니다.")
     }
 
     @PostMapping("/users")
@@ -31,4 +33,6 @@ class UserController {
 
         return user
     }
+
+
 }

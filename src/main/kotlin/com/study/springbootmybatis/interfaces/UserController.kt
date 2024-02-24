@@ -1,6 +1,7 @@
 package com.study.springbootmybatis.interfaces
 
 import com.study.springbootmybatis.application.dto.RegisterUserRequest
+import com.study.springbootmybatis.application.dto.UpdateUserRequest
 import com.study.springbootmybatis.domain.User
 import org.springframework.web.bind.annotation.*
 
@@ -34,5 +35,16 @@ class UserController {
         return user
     }
 
-
+    @PutMapping("/users/{seq}")
+    fun updateUser(@PathVariable seq: Long, @RequestBody req: UpdateUserRequest): User {
+        val user = users[seq] ?: throw RuntimeException("등록된 유저가 없습니다.")
+        val updatedUser = user.copy(
+            name = req.name,
+            email = req.email,
+            password = req.password,
+            age = req.age
+        )
+        users[seq] = updatedUser
+        return updatedUser
+    }
 }

@@ -13,8 +13,8 @@ class UserController {
     private val users: MutableMap<Long, User> = mutableMapOf()
 
     @GetMapping("/users")
-    fun getUsers(): List<String> {
-        return listOf("test-user-1", "test-user2")
+    fun getUsers(): List<User> {
+        return users.map { it.value }
     }
 
     @PostMapping("/users")

@@ -3,16 +3,18 @@ package com.study.springbootmybatis.application
 import com.study.springbootmybatis.application.dto.RegisterUserRequest
 import com.study.springbootmybatis.application.dto.UpdateUserRequest
 import com.study.springbootmybatis.domain.User
+import com.study.springbootmybatis.infrastructure.UserMapper
 import org.springframework.stereotype.Service
 
 @Service
-class UserService {
+class UserService(
+    private val userMapper: UserMapper
+) {
     private var userSequence: Long = 0
     private val users: MutableMap<Long, User> = mutableMapOf()
 
-    fun getUsers(): List<User> {
-        return users.map { it.value }
-    }
+    fun getUsers(): List<User> = userMapper.findAll()
+
 
     fun getUser(seq: Long): User {
         return users[seq] ?: throw RuntimeException("등록된 유저가 없습니다.")

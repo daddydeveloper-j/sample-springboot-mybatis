@@ -4,6 +4,7 @@ import com.study.springbootmybatis.application.UserService
 import com.study.springbootmybatis.application.dto.RegisterUserRequest
 import com.study.springbootmybatis.application.dto.UpdateUserRequest
 import com.study.springbootmybatis.domain.User
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -20,5 +21,7 @@ class UserController(
     fun registerUser(@RequestBody req: RegisterUserRequest): Long = userService.registerUser(req)
 
     @PutMapping("/users/{seq}")
-    fun updateUser(@PathVariable seq: Long, @RequestBody req: UpdateUserRequest) = userService.updateUser(seq, req)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    fun updateUser(@PathVariable seq: Long, @RequestBody req: UpdateUserRequest) =
+        userService.updateUser(seq, req)
 }

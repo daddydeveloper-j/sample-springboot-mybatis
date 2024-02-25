@@ -6,4 +6,19 @@
     <select id="findAll" resultType="com.study.springbootmybatis.domain.User">
         SELECT * FROM ACCOUNTS
     </select>
+
+    <select id="findBySeq" resultType="com.study.springbootmybatis.domain.User">
+        SELECT * FROM ACCOUNTS WHERE SEQ = #{seq}
+    </select>
+
+    <insert id="saveUser" parameterType="com.study.springbootmybatis.domain.User" useGeneratedKeys="true" keyProperty="seq">
+        INSERT INTO ACCOUNTS (name, email, password, age)
+        VALUES (#{name}, #{email}, #{password}, #{age})
+    </insert>
+
+    <update id="updateUser" parameterType="com.study.springbootmybatis.domain.User">
+        UPDATE ACCOUNTS
+        SET name = #{name}, EMAIL = #{email}, PASSWORD = #{password}, AGE = #{age}
+        WHERE SEQ = #{seq}
+    </update>
 </mapper>

@@ -1,8 +1,8 @@
 package com.study.springbootmybatis.interfaces
 
+import com.study.springbootmybatis.application.UserService
 import com.study.springbootmybatis.application.dto.RegisterUserRequest
 import com.study.springbootmybatis.application.dto.UpdateUserRequest
-import com.study.springbootmybatis.application.UserService
 import com.study.springbootmybatis.domain.User
 import org.springframework.web.bind.annotation.*
 
@@ -17,9 +17,8 @@ class UserController(
     fun getUser(@PathVariable seq: Long): User = userService.getUser(seq)
 
     @PostMapping("/users")
-    fun registerUser(@RequestBody req: RegisterUserRequest): User = userService.registerUser(req)
+    fun registerUser(@RequestBody req: RegisterUserRequest): Long = userService.registerUser(req)
 
     @PutMapping("/users/{seq}")
-    fun updateUser(@PathVariable seq: Long, @RequestBody req: UpdateUserRequest): User =
-        userService.updateUser(seq, req)
+    fun updateUser(@PathVariable seq: Long, @RequestBody req: UpdateUserRequest) = userService.updateUser(seq, req)
 }

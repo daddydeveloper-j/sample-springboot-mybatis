@@ -10,39 +10,33 @@ import org.springframework.stereotype.Service
 class UserService(
     private val userMapper: UserMapper
 ) {
-    private var userSequence: Long = 0
-    private val users: MutableMap<Long, User> = mutableMapOf()
-
     fun getUsers(): List<User> = userMapper.findAll()
 
+    fun getUser(seq: Long): User = userMapper.findBySeq(seq) ?: throw RuntimeException("등록된 유저가 없습니다.")
 
-    fun getUser(seq: Long): User {
-        return users[seq] ?: throw RuntimeException("등록된 유저가 없습니다.")
-    }
-
-    fun registerUser(req: RegisterUserRequest): User {
+    fun registerUser(req: RegisterUserRequest): Long {
         val user = User(
-            seq = ++userSequence,
             name = req.name,
             email = req.email,
             password = req.password,
             age = req.age
         )
 
-        users[user.seq] = user
-
-        return user
+        return userMapper.saveUser(user)
     }
 
-    fun updateUser(seq: Long, req: UpdateUserRequest): User {
-        val user = users[seq] ?: throw RuntimeException("등록된 유저가 없습니다.")
-        val updatedUser = user.copy(
+    fun updateUser(seq: Long, req: UpdateUserRequest) {
+        val updatedUser = User(
+            seq = seq,
             name = req.name,
             email = req.email,
             password = req.password,
             age = req.age
         )
-        users[seq] = updatedUser
-        return updatedUser
+
+        val updatedResult = userMapper.updateUser(updatedUser)
+        if (updatedResult == 0) {
+            throw RuntimeException("유저 변경에 실패 했습니다.")
+        }
     }
 }

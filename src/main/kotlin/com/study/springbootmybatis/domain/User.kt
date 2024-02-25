@@ -1,7 +1,7 @@
 package com.study.springbootmybatis.domain
 
 data class User(
-    val seq: Long,
+    val seq: Long? = null,
     val name: String,
     val email: String,
     val password: String,

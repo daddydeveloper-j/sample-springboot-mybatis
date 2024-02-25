@@ -12,3 +12,7 @@ spring:
     init:
       mode: always
       platform: h2
+
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml

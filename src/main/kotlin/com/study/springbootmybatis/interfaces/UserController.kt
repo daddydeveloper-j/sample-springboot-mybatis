@@ -17,6 +17,7 @@ class UserController(
     @GetMapping("/users/{seq}")
     fun getUser(@PathVariable seq: Long): User = userService.getUser(seq)
 
+    @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/users")
     fun registerUser(@RequestBody req: RegisterUserRequest): Long = userService.registerUser(req)
 
